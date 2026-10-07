@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Mundo - Rede Social</title>
+    <!-- Tailwind CSS para estilização moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Ocultar barra de rolagem mas permitir scroll */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+    <!-- Container do Celular / App -->
+    <div class="w-full max-w-md h-screen md:h-[850px] bg-white md:rounded-3xl shadow-2xl flex flex-col overflow-hidden relative border border-gray-200">
+        
+        <!-- TOPO / HEADER -->
+        <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3 flex justify-between items-center shadow-md z-10">
+            <h1 class="text-xl font-bold tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-globe"></i> Meu Mundo
+            </h1>
+            <div class="flex items-center space-x-4">
+                <button onclick="abrirNotificacoes()" class="relative text-lg">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-xs w-4 h-4 rounded-full flex items-center justify-center">3</span>
+                </button>
+                <button onclick="abrirPerfil()" class="w-8 h-8 rounded-full bg-indigo-400 overflow-hidden border-2 border-white">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Perfil" class="w-full h-full object-cover">
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO PRINCIPAL (FEED) -->
+        <main id="feed-container" class="flex-1 overflow-y-auto no-scrollbar pb-20 bg-gray-50">
+            
+            <!-- Stories / Status rápidos -->
+            <div class="bg-white p-3 border-b border-gray-200 flex space-x-3 overflow-x-auto no-scrollbar">
+                <div class="flex flex-col items-center flex-shrink-0 cursor-pointer" onclick="alert('Criar Story')">
+                    <div class="w-16 h-16 rounded-full border-2 border-indigo-600 p-0.5 relative">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" class="w-full h-full rounded-full object-cover">
+                        <div class="absolute bottom-0 right-0 bg-indigo-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">+</div>
+                    </div>
+                    <span class="text-xs mt-1 text-gray-700">Seu Story</span>
+                </div>
+                <!-- Outros stories -->
+                <div class="flex flex-col items-center flex-shrink-0 cursor-pointer">
+                    <div class="w-16 h-16 rounded-full border-2 border-purple-500 p-0.5">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <span class="text-xs mt-1 text-gray-700">Carlos</span>
+                </div>
+                <div class="flex flex-col items-center flex-shrink-0 cursor-pointer">
+                    <div class="w-16 h-16 rounded-full border-2 border-purple-500 p-0.5">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <span class="text-xs mt-1 text-gray-700">Mariana</span>
+                </div>
+            </div>
+
+            <!-- POSTS DINÂMICOS -->
+            <div id="posts-list" class="space-y-4 pt-2">
+                <!-- Post de Exemplo 1: Foto com Marcação -->
+                <div class="bg-white border-y border-gray-200 shadow-sm">
+                    <div class="p-3 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h3 class="font-semibold text-sm text-gray-900">Carlos Silva <span class="text-xs font-normal text-gray-500">está com <span class="text-indigo-600 font-medium">@Mariana</span></span></h3>
+                                <span class="text-xs text-gray-400">Há 25 minutos • Maputo</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-ellipsis"></i></button>
+                    </div>
+                    <div class="px-3 pb-2 text-sm text-gray-800">
+                        Curtindo um pôr do sol incrível na praia! 🌅✨
+                    </div>
+                    <div class="w-full bg-black">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" class="w-full max-h-80 object-cover">
+                    </div>
+                    <!-- Ações do Post -->
+                    <div class="p-3 flex justify-between items-center text-gray-600 border-t border-gray-100">
+                        <button onclick="curtirPost(this)" class="flex items-center gap-1.5 hover:text-red-500 transition">
+                            <i class="fa-regular fa-heart text-lg"></i> <span class="text-xs font-medium">42</span>
+                        </button>
+                        <button onclick="toggleComentarios(1)" class="flex items-center gap-1.5 hover:text-indigo-600 transition">
+                            <i class="fa-regular fa-comment text-lg"></i> <span class="text-xs font-medium">8</span>
+                        </button>
+                        <button onclick="partilharPost()" class="flex items-center gap-1.5 hover:text-green-600 transition">
+                            <i class="fa-solid fa-share text-lg"></i> <span class="text-xs font-medium">Partilhar</span>
+                        </button>
+                    </div>
+                    <!-- Área de Comentários -->
+                    <div id="comentarios-1" class="hidden bg-gray-50 p-3 border-t border-gray-200 space-y-3">
+                        <div class="flex items-start space-x-2 text-sm">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" class="w-7 h-7 rounded-full object-cover mt-0.5">
+                            <div class="flex-1 bg-white p-2 rounded-xl shadow-xs border border-gray-200">
+                                <span class="font-semibold text-xs text-gray-900">Mariana</span>
+                                <p class="text-xs text-gray-700">Lugar maravilhoso!! Quero voltar lá.</p>
+                                <div class="flex items-center space-x-3 mt-1 text-[10px] text-gray-500">
+                                    <button onclick="reagirComentario(this)" class="hover:text-red-500 font-medium">❤️ 3</button>
+                                    <button class="hover:text-indigo-600">Responder</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Input para novo comentário -->
+                        <div class="flex items-center space-x-2 mt-2">
+                            <input type="text" placeholder="Escreva um comentário..." class="flex-1 bg-white border border-gray-300 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:border-indigo-500">
+                            <button onclick="adicionarComentario(1)" class="bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-medium">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post de Exemplo 2: Música / Áudio -->
+                <div class="bg-white border-y border-gray-200 shadow-sm">
+                    <div class="p-3 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h3 class="font-semibold text-sm text-gray-900">Ana Beatriz</h3>
+                                <span class="text-xs text-gray-400">Há 2 horas</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-ellipsis"></i></button>
+                    </div>
+                    <div class="px-3 pb-2 text-sm text-gray-800">
+                        Ouvindo meu som favorito do momento! O que acham? 🎵🎧
+                    </div>
+                    <!-- Player de Música Customizado -->
+                    <div class="mx-3 mb-3 bg-gradient-to-r from-purple-900 to-indigo-900 text-white p-4 rounded-xl flex items-center space-x-4 shadow-inner">
+                        <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-sm">Vibe de Verão (Remix)</h4>
+                            <p class="text-xs text-purple-200">Meu Mundo Audio - 3:45</p>
+                            <div class="w-full bg-white/30 h-1.5 rounded-full mt-2 overflow-hidden">
+                                <div class="bg-white w-1/3 h-full rounded-full"></div>
+                            </div>
+                        </div>
+                        <button onclick="tocarMusica(this)" class="w-10 h-10 bg-white text-indigo-900 rounded-full flex items-center justify-center shadow-md">
+                            <i class="fa-solid fa-play ml-0.5"></i>
+                        </button>
+                    </div>
+                    <div class="p-3 flex justify-between items-center text-gray-600 border-t border-gray-100">
+                        <button onclick="curtirPost(this)" class="flex items-center gap-1.5 hover:text-red-500 transition">
+                            <i class="fa-regular fa-heart text-lg"></i> <span class="text-xs font-medium">120</span>
+                        </button>
+                        <button onclick="toggleComentarios(2)" class="flex items-center gap-1.5 hover:text-indigo-600 transition">
+                            <i class="fa-regular fa-comment text-lg"></i> <span class="text-xs font-medium">15</span>
+                        </button>
+                        <button onclick="partilharPost()" class="flex items-center gap-1.5 hover:text-green-600 transition">
+                            <i class="fa-solid fa-share text-lg"></i> <span class="text-xs font-medium">Partilhar</span>
+                        </button>
+                    </div>
+                    <div id="comentarios-2" class="hidden bg-gray-50 p-3 border-t border-gray-200 space-y-3">
+                        <div class="flex items-center space-x-2 mt-2">
+                            <input type="text" placeholder="Escreva um comentário..." class="flex-1 bg-white border border-gray-300 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:border-indigo-500">
+                            <button onclick="adicionarComentario(2)" class="bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-medium">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- MENU DE NAVEGAÇÃO INFERIOR -->
+        <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 flex justify-around items-center z-20 shadow-lg">
+            <button onclick="mudarAba(this, 'home')" class="text-indigo-600 flex flex-col items-center">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px] mt-0.5">Início</span>
+            </button>
+            <button onclick="mudarAba(this, 'explorar')" class="text-gray-400 hover:text-indigo-600 flex flex-col items-center">
+                <i class="fa-solid fa-compass text-lg"></i>
+                <span class="text-[10px] mt-0.5">Explorar</span>
+            </button>
+            <!-- Botão Central de Publicar -->
+            <button onclick="abrirModalPublicar()" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg -mt-4 transform hover:scale-105 transition">
+                <i class="fa-solid fa-plus text-xl"></i>
+            </button>
+            <button onclick="mudarAba(this, 'mensagens')" class="text-gray-400 hover:text-indigo-600 flex flex-col items-center">
+                <i class="fa-regular fa-comment-dots text-lg"></i>
+                <span class="text-[10px] mt-0.5">Chat</span>
+            </button>
+            <button onclick="mudarAba(this, 'perfil')" class="text-gray-400 hover:text-indigo-600 flex flex-col items-center">
+                <i class="fa-regular fa-user text-lg"></i>
+                <span class="text-[10px] mt-0.5">Perfil</span>
+            </button>
+        </nav>
+
+        <!-- MODAL DE CRIAR PUBLICAÇÃO -->
+        <div id="modal-publicar" class="fixed inset-0 bg-black/60 z-50 hidden flex items-end md:items-center justify-center">
+            <div class="bg-white w-full max-w-md rounded-t-3xl md:rounded-2xl p-4 max-h-[90vh] overflow-y-auto animate-slide-up">
+                <div class="flex justify-between items-center border-b border-gray-200 pb-3">
+                    <h3 class="font-bold text-gray-800">Criar Publicação no Meu Mundo</h3>
+                    <button onclick="fecharModalPublicar()" class="text-gray-500 hover:text-gray-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                
+                <div class="mt-4 space-y-3">
+                    <textarea id="texto-publicacao" rows="3" placeholder="O que está a acontecer no seu mundo hoje?" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500 resize-none"></textarea>
+                    
+                    <!-- Ferramentas de anexos -->
+                    <div class="grid grid-cols-4 gap-2 text-center">
+                        <button type="button" onclick="alert('Simulador: Selecionar Foto')" class="bg-indigo-50 text-indigo-600 py-2 rounded-xl text-xs font-medium flex flex-col items-center gap-1 hover:bg-indigo-100">
+                            <i class="fa-regular fa-image text-base"></i> Foto
+                        </button>
+                        <button type="button" onclick="alert('Simulador: Selecionar Vídeo')" class="bg-purple-50 text-purple-600 py-2 rounded-xl text-xs font-medium flex flex-col items-center gap-1 hover:bg-purple-100">
+                            <i class="fa-solid fa-video text-base"></i> Vídeo
+                        </button>
+                        <button type="button" onclick="alert('Simulador: Selecionar Música')" class="bg-pink-50 text-pink-600 py-2 rounded-xl text-xs font-medium flex flex-col items-center gap-1 hover:bg-pink-100">
+                            <i class="fa-solid fa-music text-base"></i> Música
+                        </button>
+                        <button type="button" onclick="adicionarTag()" class="bg-blue-50 text-blue-600 py-2 rounded-xl text-xs font-medium flex flex-col items-center gap-1 hover:bg-blue-100">
+                            <i class="fa-solid fa-user-tag text-base"></i> Identificar
+                        </button>
+                    </div>
+
+                    <div id="tags-container" class="text-xs text-indigo-600 font-medium"></div>
+
+                    <button onclick="publicarConteudo()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium py-3 rounded-xl shadow-md hover:opacity-95 transition mt-2">
+                        Publicar Agora
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS DE INTERATIVIDADE -->
+    <script>
+        function curtirPost(btn) {
+            const span = btn.querySelector('span');
+            let count = parseInt(span.innerText);
+            if (btn.classList.contains('text-red-500')) {
+                btn.classList.remove('text-red-500', 'font-bold');
+                btn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
+                span.innerText = count - 1;
+            } else {
+                btn.classList.add('text-red-500', 'font-bold');
+                btn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
+                span.innerText = count + 1;
+            }
+        }
+
+        function toggleComentarios(id) {
+            const box = document.getElementById(`comentarios-${id}`);
+            box.classList.toggle('hidden');
+        }
+
+        function partilharPost() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Meu Mundo',
+                    text: 'Olha esta publicação incrível no Meu Mundo!',
+                    url: window.location.href,
+                }).catch(() => {});
+            } else {
+                alert('Link copiado para a área de transferência!');
+            }
+        }
+
+        function reagirComentario(btn) {
+            if(btn.innerText.includes('❤️ 3')) {
+                btn.innerHTML = '❤️ 4';
+                btn.classList.add('text-red-500');
+            } else {
+                btn.innerHTML = '❤️ 3';
+                btn.classList.remove('text-red-500');
+            }
+        }
+
+        function tocarMusica(btn) {
+            const icon = btn.querySelector('i');
+            if(icon.classList.contains('fa-play')) {
+                icon.classList.replace('fa-play', 'fa-pause');
+                icon.classList.remove('ml-0.5');
+            } else {
+                icon.classList.replace('fa-pause', 'fa-play');
+                icon.classList.add('ml-0.5');
+            }
+        }
+
+        function abrirModalPublicar() {
+            document.getElementById('modal-publicar').classList.remove('hidden');
+        }
+
+        function fecharModalPublicar() {
+            document.getElementById('modal-publicar').classList.add('hidden');
+        }
+
+        function adicionarTag() {
+            const pessoa = prompt("Quem deseja identificar? (Ex: @joao)");
+            if(pessoa) {
+                document.getElementById('tags-container').innerText = `Companhia: ${pessoa}`;
+            }
+        }
+
+        function publicarConteudo() {
+            const texto = document.getElementById('texto-publicacao').value;
+            if(!texto.trim()) {
+                alert('Escreva alguma coisa antes de publicar!');
+                return;
+            }
+
+            const lista = document.getElementById('posts-list');
+            const novoPost = document.createElement('div');
+            novoPost.className = 'bg-white border-y border-gray-200 shadow-sm animate-fade-in';
+            novoPost.innerHTML = `
+                <div class="p-3 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-semibold text-sm text-gray-900">Você <span class="text-xs font-normal text-indigo-600">${document.getElementById('tags-container').innerText}</span></h3>
+                            <span class="text-xs text-gray-400">Agora mesmo</span>
+                        </div>
+                    </div>
+                    <button class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-ellipsis"></i></button>
+                </div>
+                <div class="px-3 pb-3 text-sm text-gray-800">${texto}</div>
+                <div class="p-3 flex justify-between items-center text-gray-600 border-t border-gray-100">
+                    <button onclick="curtirPost(this)" class="flex items-center gap-1.5 hover:text-red-500 transition">
+                        <i class="fa-regular fa-heart text-lg"></i> <span class="text-xs font-medium">0</span>
+                    </button>
+                    <button onclick="toggleComentarios(99)" class="flex items-center gap-1.5 hover:text-indigo-600 transition">
+                        <i class="fa-regular fa-comment text-lg"></i> <span class="text-xs font-medium">0</span>
+                    </button>
+                    <button onclick="partilharPost()" class="flex items-center gap-1.5 hover:text-green-600 transition">
+                        <i class="fa-solid fa-share text-lg"></i> <span class="text-xs font-medium">Partilhar</span>
+                    </button>
+                </div>
+                <div id="comentarios-99" class="hidden bg-gray-50 p-3 border-t border-gray-200 space-y-3">
+                    <div class="flex items-center space-x-2 mt-2">
+                        <input type="text" placeholder="Escreva um comentário..." class="flex-1 bg-white border border-gray-300 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:border-indigo-500">
+                        <button onclick="adicionarComentario(99)" class="bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-medium">Enviar</button>
+                    </div>
+                </div>
+            `;
+            
+            lista.prepend(novoPost);
+            document.getElementById('texto-publicacao').value = '';
+            document.getElementById('tags-container').innerText = '';
+            fecharModalPublicar();
+        }
+
+        function mudarAba(btn, aba) {
+            document.querySelectorAll('nav button').forEach(b => {
+                b.classList.remove('text-indigo-600');
+                b.classList.add('text-gray-400');
+            });
+            if(aba !== 'criar') {
+                btn.classList.remove('text-gray-400');
+                btn.classList.add('text-indigo-600');
+            }
+        }
+
+        function abrirNotificacoes() { alert('Suas notificações: \n- Carlos curtiu sua foto\n- Mariana comentou na sua partilha'); }
+        function abrirPerfil() { alert('Abrindo seu perfil no Meu Mundo...'); }
+    </script>
+</body>
+</html>
